@@ -1,0 +1,139 @@
+{
+    "name": "Landreuse",
+    "date": "2015-09-10T22:02:05.000Z",
+    "author": "Landru",
+    "steps": [
+        {
+            "name": "Empâtage",
+            "lasting": 15,
+            "temperature": 45,
+            "ingredients": [
+                {
+                    "type": "fermentable",
+                    "name": "Pilsner",
+                    "unitFamilly": "mass",
+                    "qty": {
+                        "value": 6,
+                        "unit": {
+                            "family": "mass",
+                            "name": "kg"
+                        }
+                    },
+                    "ebc": 2,
+                    "yield": 81
+                },
+                {
+                    "type": "water",
+                    "name": "Eau",
+                    "unitFamilly": "volume",
+                    "qty": {
+                        "value": 20,
+                        "unit": {
+                            "family": "volume",
+                            "name": "l"
+                        }
+                    }
+                },
+                {
+                    "type": "fermentable",
+                    "name": "Chocolat (Malt)",
+                    "unitFamilly": "mass",
+                    "qty": {
+                        "value": 200,
+                        "unit": {
+                            "family": "mass",
+                            "name": "g"
+                        }
+                    },
+                    "ebc": 500,
+                    "yield": 71
+                }
+            ],
+            "uuid": "52c7f3b7-dd19-4842-a7e2-0c6d3a695329"
+        },
+        {
+            "name": "Premier palier",
+            "lasting": 20,
+            "temperature": 68,
+            "ingredients": [],
+            "uuid": "2dbd9aa4-d6a1-4bd3-ac98-4a3a92334fde"
+        },
+        {
+            "name": "Second palier",
+            "lasting": 45,
+            "temperature": 62,
+            "ingredients": [],
+            "uuid": "989f6617-41c9-412f-9ea6-bf9434858cb4"
+        },
+        {
+            "name": "Enzyme",
+            "lasting": 5,
+            "temperature": 77,
+            "ingredients": [],
+            "uuid": "b6e92ed2-7176-49ee-8c27-c1498702aa4c"
+        },
+        {
+            "name": "Rinçage",
+            "lasting": 30,
+            "temperature": 80,
+            "ingredients": [
+                {
+                    "type": "water",
+                    "name": "Tap water",
+                    "unitFamilly": "volume",
+                    "qty": {
+                        "value": 20,
+                        "unit": {
+                            "family": "volume",
+                            "name": "l"
+                        }
+                    }
+                }
+            ],
+            "uuid": "d83eba15-dab4-4526-a7c9-eb57da9a0f27"
+        },
+        {
+            "name": "Ébulition",
+            "lasting": 60,
+            "temperature": 100,
+            "ingredients": [
+                {
+                    "type": "hop",
+                    "name": "Pearle",
+                    "unitFamilly": "mass",
+                    "qty": {
+                        "value": 40,
+                        "unit": {
+                            "family": "mass",
+                            "name": "g"
+                        }
+                    },
+                    "alpha": 7.2,
+                    "form": "flower"
+                }
+            ],
+            "uuid": "9946770b-47b5-432e-8e03-485cea04a36b"
+        },
+        {
+            "name": "Fermentation",
+            "lasting": 14400,
+            "temperature": 16,
+            "ingredients": [
+                {
+                    "type": "yeast",
+                    "name": "S04",
+                    "unitFamilly": "mass",
+                    "qty": {
+                        "value": 12,
+                        "unit": {
+                            "family": "mass",
+                            "name": "g"
+                        }
+                    }
+                }
+            ],
+            "uuid": "e4443e04-2a9b-494b-b463-166921de434e"
+        }
+    ],
+    "uuid": "f5c98fb6-d0a2-4c95-8fd6-b54c0b371bca"
+}

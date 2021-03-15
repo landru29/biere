@@ -1,0 +1,81 @@
+.receipe {
+
+    .accordion {
+        //margin-left: 35px;
+
+        div.process-item {
+            padding-left: 35px;
+        }
+
+        .dragging {
+            background-color: #eeeeee;
+        }
+    }
+
+    h2 {
+        text-align: left;
+    }
+
+    .libelized {
+        display: inline-block;
+        width: 150px;
+        &::after {
+            content: ':',
+        }
+    }
+
+    ul.features{
+        list-style-type: none;
+    }
+
+    .accordion-block {
+        display: inline-block;
+        width: 98%;
+    }
+
+    .handle {
+        display: inline-block;
+        width: 2%;
+    }
+
+    .step-title {
+        position: relative;
+
+        .step-name {
+            display: inline-block;
+        }
+
+        .process-temperature {
+            display: inline-block;
+            position: absolute;
+            left: 240px;
+            i {
+                margin-right: 3px;
+            }
+            border: solid 1px #333;
+            padding: 0 4px 0 4px;
+            input.form-control{
+                width: 50px;
+            }
+        }
+
+        .process-duration {
+            display: inline-block;
+            position: absolute;
+            left: 400px;
+            i {
+                margin-right: 5px;
+            }
+
+            input.form-control{
+                width: 50px;
+            }
+        }
+
+        .step-delete {
+            position: absolute;
+            left: 560px;
+            top: -5px;
+        }
+    }
+}

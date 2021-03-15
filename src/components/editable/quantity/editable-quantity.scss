@@ -1,0 +1,13 @@
+.editable-quantity {
+    display: inline-block;
+
+    input.form-control {
+        display: inline-block;
+        width: 150px;
+    }
+
+    select.form-control {
+        display: inline-block;
+        width: 80px;
+    }
+}
