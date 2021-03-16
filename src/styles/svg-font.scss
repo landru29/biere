@@ -1,0 +1,7 @@
+@mixin font-list {
+    @for $i from 1 through 32 {
+        .font-#{$i} { height: #{$i}px; width: #{$i}px; }
+    }
+  }
+  
+  @include font-list;

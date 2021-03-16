@@ -15,7 +15,7 @@ interface State {
     editing: boolean;
 }
 
-export class EditableQuantity extends React.PureComponent<Props, State> {
+export default class EditableQuantity extends React.PureComponent<Props, State> {
 
     constructor(props: Props, public state: State) {
         super(props, state);

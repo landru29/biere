@@ -1,0 +1,56 @@
+
+$uncheckBgGnd: #cac5bc;;
+$checkBgGnd: #fde401;
+$shadeColor: #888;
+$font-family-base: 'Lato', sans-serif;
+
+$checkboxWidth: 35px;
+
+.checkbox {    
+  display: inline-block;
+  margin-bottom: 0;
+  margin-top: 0;
+  position: relative;
+  align-items: center;
+  cursor: pointer;
+  
+  > .field {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
+  
+  > .toggle {
+    flex: 0 0 $checkboxWidth;
+    display: inline-block;
+    background-color: $uncheckBgGnd;
+    width: $checkboxWidth;
+    height: 16px;
+    vertical-align: middle;
+    border-radius: 8px;
+    border: 2px solid $uncheckBgGnd;
+    margin-right: 8px;
+    transition: all 0.6s; 
+  }
+  
+  > .toggle:before {
+    content: '';
+    display: block;
+    width: 12px;
+    height: 12px;
+    background-color: $shadeColor;
+    border-radius: 50%;
+    transition: margin 0.3s;
+    
+  }
+  
+  .field:checked + .toggle:before {
+    margin-left: $checkboxWidth - 16px;
+  }
+  
+  .field:checked + .toggle {
+    border-color: $shadeColor;
+    background-color: $checkBgGnd;
+  }
+}

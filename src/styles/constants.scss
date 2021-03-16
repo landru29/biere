@@ -1,0 +1,64 @@
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss";
+
+$ovh-color: #14406B;
+$brand-light: lighten($ovh-color, 30%);
+$brand-extra-light: lighten($ovh-color, 60%);
+$brand-primary: $ovh-color;
+$navbar-text-color: $ovh-color;
+$errorBgColor: #ff8a8a;
+$errorColor: #f00;
+
+$state-muted-text:             #757575;
+$state-muted-bg:               #eee;
+$state-muted-border:           darken(adjust-hue($state-muted-bg, -10), 5%);
+
+$state-primary-text:             $ovh-color;
+$state-primary-bg:               #97BEE5;
+$state-primary-border:           darken(adjust-hue($state-primary-bg, -10), 5%);
+
+$text-brand: darken($brand-light, 30%);
+
+$nightColor: #bbc6ff;
+
+$header-color: #3d8ddb;
+$header-light-color: lighten($header-color, 20%);
+$header-dark-color: darken($header-color, 10%);
+
+$btn-success-color: $brand-success;
+$btn-success-bg: #fff;
+$btn-success-border: $btn-success-color;
+$brand-success-dark: darken($brand-success, 10%);
+$success-light: lighten($brand-success, 20%);
+
+$btn-default-color: #333;
+$btn-default-bg: #fff;
+$btn-default-border: $btn-default-color;
+$default-light: lighten($btn-default-color, 20%);
+
+$btn-primary-color: $brand-primary;
+$btn-primary-bg: #fff;;
+$btn-primary-border: $btn-primary-color;
+$primary-light: lighten($btn-primary-color, 20%);
+
+$btn-info-color: $brand-info;
+$btn-info-bg: #fff;;
+$btn-info-border: $btn-info-color;
+$info-light: lighten($btn-info-color, 20%);
+
+$btn-warning-color: $brand-warning;
+$btn-warning-bg: #fff;;
+$btn-warning-border: $btn-warning-color;
+$warning-light: lighten($btn-warning-color, 20%);
+
+$btn-danger-color: $brand-danger;
+$btn-danger-bg: #fff;;
+$btn-danger-border: $btn-danger-color;
+$danger-light: lighten($btn-danger-color, 20%);
+
+$menu-hover-color: lighten($brand-light, 20%);
+
+$default-bg-color: lighten($brand-light, 33%);
+
+$font-size-base: 12px;
+
+$imgPath: "../assets/";

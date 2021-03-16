@@ -1,0 +1,58 @@
+
+$icon-font-path: "../../node_modules/bootstrap-sass/assets/fonts/bootstrap/" !default;
+@import "~bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "./constants.scss";
+@import "./svg-font.scss";
+
+html {
+    body {
+        height: 100%;
+        font-family: FontAwesome, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    }
+}
+
+.required {
+    &:after {
+        content: " *";
+        color: #ff0000;
+    }
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+@media print {
+    .no-print {
+        display: none;
+    }
+}
+
+$spaceamounts: (2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 30, 32, 40, 50, 64, 100, 128); // Adjust this to include the pixel amounts you need.
+$sides: (top, bottom, left, right); // Leave this variable alone
+
+@each $space in $spaceamounts {
+  @each $side in $sides {
+    .#{$side}-space-m#{$space} {
+        margin-#{$side}: #{$space}px !important;
+    }
+
+    .#{$side}-space-p#{$space} {
+        padding-#{$side}: #{$space}px !important;
+    }
+
+  }
+}
+
+.relative {
+    position: relative;
+}

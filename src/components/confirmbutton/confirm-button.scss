@@ -1,0 +1,74 @@
+@import '../../styles/constants.scss';
+
+.confirm-button {
+  background-color: $btn-default-bg;
+  border: 0;
+  color: $brand-primary;
+  cursor: pointer;
+  display: inline-block;
+  padding: 2px 7px;
+  text-decoration: none;
+  text-shadow: 0 1px 0 $btn-default-color;
+
+  &:active {
+    outline: 0;
+    position: relative;
+    top: 1px;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:hover {
+    color: lighten($brand-primary, 10%);
+  }
+
+  &:disabled{
+    color:lighten($brand-success, 30%);
+  }
+}
+
+.confirm-button-accept {
+  background-color: $btn-default-bg;
+  border: 1px solid $btn-default-border;
+  border-bottom-right-radius: 2px;
+  border-top-right-radius: 2px;
+  color: $brand-primary;
+  cursor: pointer;
+  display: inline-block;
+  padding: 2px 7px;
+  text-decoration: none;
+  text-shadow: 0 1px 0 $btn-default-color;
+
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+
+  &:hover {
+    color: lighten($brand-primary, 10%);
+  }
+}
+
+.confirm-button-abord {
+  background-color: $btn-default-bg;
+  border: 1px solid $btn-default-border;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+  color: $brand-warning;
+  cursor: pointer;
+  display: inline-block;
+  padding: 2px 7px;
+  text-decoration: none;
+  text-shadow: 0 1px 0 $btn-default-color;
+
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+
+  &:hover {
+    color: lighten($brand-warning, 10%);
+  }
+}

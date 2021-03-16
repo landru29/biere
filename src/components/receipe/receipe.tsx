@@ -3,7 +3,7 @@ import { Receipe } from '../../model/receipe';
 import Data from '../../service/data';
 import {v4 as uuidv4} from 'uuid';
 import './receipe.scss';
-import { EditableText } from '../editable/text/editable-text';
+import EditableText from '../editable/text/editable-text';
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import { Color } from '../../service/color';
 import { Step } from '../../model/step';
@@ -11,6 +11,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPlus, faExclamationTriangle, faClock, faBars } from '@fortawesome/free-solid-svg-icons';
 import { SemanticDatepickerProps } from 'react-semantic-ui-datepickers/dist/types';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
+import { Accordion, Icon } from 'semantic-ui-react';
+import { ConfirmButton } from '../confirmbutton/confirm-button';
+import StepComponent from '../step/step';
 
 
 interface ReceipeProps {
@@ -94,6 +97,137 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
         }
     }
 
+    handleClick = (index: number) => {
+        const activeSteps = [...this.state.activeSteps];
+        return () => {
+            activeSteps[index] = !activeSteps[index];
+            this.setState({ activeSteps });
+        };
+    }
+
+    handleStepRemove = (step: Step) => {
+        return () => {
+            const index = this.state.receipe.steps.indexOf(step);
+            const activeSteps = [ ...this.state.activeSteps];
+            activeSteps.splice(index, 1);
+            this.setState({
+                activeSteps,
+            }, () => {
+                const steps = this.state.receipe.steps.filter((s: Step) => s !== step);
+                console.log(steps);
+                this.setState({
+                    receipe: Receipe.fromApi({
+                        ...this.state.receipe,
+                        steps,
+                    }),
+                });
+            });
+        };
+    }
+
+    handleStepChange = (step: Step) => {
+        return (newStep: Step) => {
+            this.setState({
+                receipe: Receipe.fromApi({
+                    ...this.state.receipe,
+                    steps: this.state.receipe.steps.map((s: Step) => s === step ? newStep : s),
+                }),
+            });
+        };
+    }
+
+    handleStepNameChange = (step: Step) => {
+        return (name: string) => {
+            const receipe = this.state.receipe;
+            receipe.steps = receipe.steps.map((stp: Step) => {
+                return stp.uuid === step.uuid ? { ...step, name } : stp;
+            });
+            this.setState({
+                receipe: Receipe.fromApi(receipe),
+            });
+        };
+    }
+
+    handleStepTemperatureChange = (step: Step) => {
+        return (temperature: number) => {
+            const receipe = this.state.receipe;
+            receipe.steps = receipe.steps.map((stp: Step) => {
+                return stp.uuid === step.uuid ? { ...step, temperature } : stp;
+            });
+            this.setState({
+                receipe: Receipe.fromApi(receipe),
+            });
+        };
+    }
+
+    handleStepLastingChange = (step: Step) => {
+        return (lasting: number) => {
+            const receipe = this.state.receipe;
+            receipe.steps = receipe.steps.map((stp: Step) => {
+                return stp.uuid === step.uuid ? { ...step, lasting } : stp;
+            });
+            this.setState({
+                receipe: Receipe.fromApi(receipe),
+            });
+        };
+    }
+
+    handleStepAdd = () => {
+        this.setState({
+                receipe: Receipe.fromApi({
+                ...this.state.receipe,
+                steps: [ ...this.state.receipe.steps, new Step('Nouvelle étape') ],
+            }),
+        });
+    }
+
+    handleMouseDownHdl = (index: number) => {
+        return (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+            this.setState({ toDrag: index });
+        };
+    }
+
+    onDragStart = (index: number) => {
+        return (event: React.DragEvent<HTMLDivElement>) => {
+            const receipe: Receipe = this.state.receipe || new Receipe('', new Date(), '');
+            this.dragStep = receipe.steps[index];
+            event.dataTransfer.effectAllowed = 'move';
+            this.draggingSteps = receipe.steps.filter((step: Step) => step !== this.dragStep);
+            const steps = [...this.draggingSteps];
+            steps.splice(index, 0, this.dragStep);
+
+            this.setState({
+                receipe: Receipe.fromApi({
+                    ...this.state.receipe,
+                    steps,
+                }),
+            });
+        };
+    }
+
+    onDragOver = (index: number) => {
+        return (event: React.DragEvent<HTMLDivElement>) => {
+            if (this.dragStep) {
+                const steps = [...this.draggingSteps];
+                steps.splice(index, 0, this.dragStep);
+
+                this.setState({
+                    receipe: Receipe.fromApi({
+                        ...this.state.receipe,
+                        steps,
+                    }),
+                });
+            }
+        };
+    }
+
+    onDragEnd = () => {
+        this.setState({ toDrag: undefined });
+        this.dragStep = undefined;
+        this.setState({
+            receipe: Receipe.fromApi(this.state.receipe),
+        });
+    }
     
     render() :any {
         const receipe: Receipe = this.state.receipe || new Receipe('', new Date(), '');
@@ -154,6 +288,52 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
                     </ul>
                 </div>
             </header>
+
+            <Accordion>
+                {receipe.steps.map((step: Step, index: number) => {
+                    return <div
+                            key={step.uuid}
+                            onDragStart={this.onDragStart(index)}
+                            onDragEnd={this.onDragEnd}
+                            onDragOver={this.onDragOver(index)}
+                            draggable={toDrag === index}
+                            className={step.uuid === dragStepUuid ? 'dragging process-item' : 'process-item'}
+                            >
+                        <span className="handle"
+                            onMouseDown={this.handleMouseDownHdl(index)}
+                        ><FontAwesomeIcon icon={faBars} /></span>
+                        <span className="accordion-block"><Accordion.Title active={activeSteps[index]} index={index} onClick={this.handleClick(index)}>
+                            <div className="step-title">
+                                <Icon name="dropdown" />
+                                <span className="step-name">
+                                    <EditableText<string>
+                                        value={step.name}
+                                        onChange={this.handleStepNameChange(step)}/>
+                                    </span>
+                                <div className="process-temperature">
+                                    <EditableText<number>
+                                        value={step.temperature}
+                                        onChange={this.handleStepTemperatureChange(step)}
+                                        template={ (temperature: number) => `${temperature} °C` }/>
+                                </div>
+                                <div className="process-duration">
+                                    <FontAwesomeIcon icon={faClock} />
+                                    <EditableText<number>
+                                        value={step.lasting}
+                                        onChange={this.handleStepLastingChange(step)}
+                                        template={ (lasting: number) => `${lasting} min` }/>
+                                </div>
+                                <ConfirmButton className="step-delete" onAccept={this.handleStepRemove(step)}><FontAwesomeIcon icon={faTrash} /></ConfirmButton>
+                            </div>
+                        </Accordion.Title>
+                        <Accordion.Content active={activeSteps[index]}>
+                            <StepComponent step={step} onChange={this.handleStepChange(step)}/>
+                        </Accordion.Content></span>
+                    </div>;
+                })}
+            </Accordion>
+            
+            <button type="button" className="btn btn-link step-delete" onClick={this.handleStepAdd}><FontAwesomeIcon icon={faPlus} /></button>
         </div>;
     }
 }
