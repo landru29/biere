@@ -48,10 +48,13 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
         });
     }
 
+    validate(receipe: Receipe) {
+        Data.setData(receipe);
+        this.setState({ receipe });
+    }
+
     handleTitleChange = (name: string) => {
-        this.setState({
-            receipe: Receipe.fromApi({ ...this.state.receipe, name })
-        });
+        this.validate(Receipe.fromApi({ ...this.state.receipe, name }));
     }
 
     getReceipe() {
@@ -59,7 +62,7 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
         const api = new Data();
         api.getData().subscribe({
             next: (receipe: Receipe) => {
-                this.setState({ receipe })
+                this.validate(receipe)
             }
         });
     }
@@ -68,31 +71,28 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
         this.getReceipe();
     }
 
-    //onDateChange = (date: Date | Date[] | null) => {
     onDateChange = (event: React.SyntheticEvent<Element, Event> | undefined, data: SemanticDatepickerProps) => {
         const date = data.value;
         if (date) {
             if (Array.isArray(date) && date.length > 1 && !isNaN(date[0].getTime())) {
-                this.setState({
-                    receipe: Receipe.fromApi({
+                this.validate(
+                    Receipe.fromApi({
                         ...this.state.receipe,
                         date: date[0],
                     }),
-                });
+                );
             } else if (!isNaN((date as Date).getTime())) {
-                this.setState({
-                    receipe: Receipe.fromApi({
+                this.validate( Receipe.fromApi({
                         ...this.state.receipe,
                         date,
                     }),
-                });
+                );
             } else {
-                this.setState({
-                    receipe: Receipe.fromApi({
+                this.validate( Receipe.fromApi({
                         ...this.state.receipe,
                         date: new Date(),
                     }),
-                });
+                );
             }
         }
     }
@@ -115,24 +115,22 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
             }, () => {
                 const steps = this.state.receipe.steps.filter((s: Step) => s !== step);
                 console.log(steps);
-                this.setState({
-                    receipe: Receipe.fromApi({
+                this.validate( Receipe.fromApi({
                         ...this.state.receipe,
                         steps,
                     }),
-                });
+                );
             });
         };
     }
 
     handleStepChange = (step: Step) => {
         return (newStep: Step) => {
-            this.setState({
-                receipe: Receipe.fromApi({
+            this.validate( Receipe.fromApi({
                     ...this.state.receipe,
                     steps: this.state.receipe.steps.map((s: Step) => s === step ? newStep : s),
                 }),
-            });
+            );
         };
     }
 
@@ -142,9 +140,9 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
             receipe.steps = receipe.steps.map((stp: Step) => {
                 return stp.uuid === step.uuid ? { ...step, name } : stp;
             });
-            this.setState({
-                receipe: Receipe.fromApi(receipe),
-            });
+            this.validate(
+                Receipe.fromApi(receipe),
+            );
         };
     }
 
@@ -154,9 +152,9 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
             receipe.steps = receipe.steps.map((stp: Step) => {
                 return stp.uuid === step.uuid ? { ...step, temperature } : stp;
             });
-            this.setState({
-                receipe: Receipe.fromApi(receipe),
-            });
+            this.validate(
+                Receipe.fromApi(receipe),
+            );
         };
     }
 
@@ -166,19 +164,18 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
             receipe.steps = receipe.steps.map((stp: Step) => {
                 return stp.uuid === step.uuid ? { ...step, lasting } : stp;
             });
-            this.setState({
-                receipe: Receipe.fromApi(receipe),
-            });
+            this.validate(
+                Receipe.fromApi(receipe),
+            );
         };
     }
 
     handleStepAdd = () => {
-        this.setState({
-                receipe: Receipe.fromApi({
+        this.validate( Receipe.fromApi({
                 ...this.state.receipe,
                 steps: [ ...this.state.receipe.steps, new Step('Nouvelle étape') ],
             }),
-        });
+        );
     }
 
     handleMouseDownHdl = (index: number) => {
@@ -196,12 +193,11 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
             const steps = [...this.draggingSteps];
             steps.splice(index, 0, this.dragStep);
 
-            this.setState({
-                receipe: Receipe.fromApi({
+            this.validate( Receipe.fromApi({
                     ...this.state.receipe,
                     steps,
                 }),
-            });
+            );
         };
     }
 
@@ -211,12 +207,12 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
                 const steps = [...this.draggingSteps];
                 steps.splice(index, 0, this.dragStep);
 
-                this.setState({
-                    receipe: Receipe.fromApi({
+                this.validate(
+                    Receipe.fromApi({
                         ...this.state.receipe,
                         steps,
                     }),
-                });
+                );
             }
         };
     }
@@ -224,12 +220,12 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
     onDragEnd = () => {
         this.setState({ toDrag: undefined });
         this.dragStep = undefined;
-        this.setState({
-            receipe: Receipe.fromApi(this.state.receipe),
-        });
+        this.validate(
+            Receipe.fromApi(this.state.receipe),
+        );
     }
     
-    render() :any {
+    render() : any {
         const receipe: Receipe = this.state.receipe || new Receipe('', new Date(), '');
         const activeSteps: boolean[] = this.state.activeSteps || [];
         const beerColor: Color = receipe.color();
@@ -253,21 +249,29 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
                             value={receipe.date}/>
                     </div>
                     <ul className="features">
+                        <li className="important">
+                            <span className="water libelized">Volume final</span>
+                            <span >{ receipe.finalVolume().convertTo('volume.l').toFixed(1) }</span>
+                            <span className="unit">L</span>
+                        </li>
+                        <li className="important">
+                            <span className="drink libelized">Alcool</span>
+                            <span >{ receipe.diluatedSugar().alcohol.toFixed(1)}</span>
+                            <span className="unit">%Vol</span>
+                        </li>
                         <li>
                             <span className="water libelized">Volume d'empâtage</span>
-                            <span >{ receipe.advicedMashingVolume().convertTo('volume.l').toFixed(1) } L</span>
+                            <span >{ receipe.advicedMashingVolume().convertTo('volume.l').toFixed(1) }</span>
+                            <span className="unit">L</span>
                         </li>
                         <li className={!needRincing ? 'alert-danger' : ''}>
                             <span className="water libelized">Volume de rinçage</span>
-                            <span >{ receipe.advicedRincingVolume().convertTo('volume.l').toFixed(1) } L</span>
+                            <span >{ receipe.advicedRincingVolume().convertTo('volume.l').toFixed(1) }</span>
+                            <span className="unit">L</span>
                             { !needRincing && <span>
                                 <FontAwesomeIcon className="left-space-m16 right-space-m8" icon={faExclamationTriangle} />
                                 Ajoutez de l'eau, j'ai soif !
                                 </span> }
-                        </li>
-                        <li>
-                            <span className="water libelized">Volume final</span>
-                            <span >{ receipe.finalVolume().convertTo('volume.l').toFixed(1) } L</span>
                         </li>
                         <li>
                             <span className="gravity libelized">Densité initiale</span>
@@ -276,10 +280,6 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
                         <li>
                             <span className="hops libelized">IBU</span>
                             <span >{ receipe.ibu().toFixed(1) }</span>
-                        </li>
-                        <li>
-                            <span className="drink libelized">Alcool</span>
-                            <span >{ receipe.diluatedSugar().alcohol.toFixed(1)} %Vol</span>
                         </li>
                         <li>
                             <span className="drink libelized">Couleur</span>

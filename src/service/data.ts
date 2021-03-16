@@ -23,16 +23,32 @@ export default class Data {
         });
     }
 
+    public static setData(receipe: Receipe) {
+        Data.localData = receipe;
+    }
+
     public static listenOpenFile() {
         const electron = window.require("electron")
         electron.ipcRenderer.on('open-file', (event: any, ...args: any[]) => {
-            console.log("yolo", args);
             const fs = window.require('fs');
             try {
                 const sourceData = fs.readFileSync(args[0]);
                 const obj = JSON.parse(sourceData);
                 Data.localData = Receipe.fromApi(obj);
                 Data.subscriber.forEach((s: Subscriber<boolean>) => s.next(true))
+            } catch (e) {
+                console.log("impossible to open file", e)
+            }
+        });
+    }
+
+    public static listenSaveFile() {
+        const electron = window.require("electron")
+        electron.ipcRenderer.on('save-file', (event: any, ...args: any[]) => {
+            console.log("yolo", args);
+            const fs = window.require('fs');
+            try {
+                fs.WriteFileSync(args[0], JSON.stringify(Data.localData));
             } catch (e) {
                 console.log("impossible to open file", e)
             }

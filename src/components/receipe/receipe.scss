@@ -18,10 +18,13 @@
 
     .libelized {
         display: inline-block;
-        width: 150px;
+        width: 180px;
+        font-weight: bold;
+        font-size: 1.2em;
         &::after {
             content: ':',
         }
+        margin-bottom: 5px;
     }
 
     ul.features{
@@ -78,4 +81,33 @@
             top: -5px;
         }
     }
+}
+
+.unit {
+    font-style: italic;
+    color: #717171;
+    padding-left: 5px;
+}
+
+.badge {
+    height: 20px;
+    display: inline-block;
+    border-radius: 10px;
+    padding: 0 10px 0 10px;
+}
+
+label {
+    display: inline-block;
+    width: 80px;
+    font-weight: bold;
+    font-size: 1.2em;
+    &::after {
+        content: ':',
+    }
+    margin-bottom: 5px;
+}
+
+.important {
+    font-size: 1.3em;
+    margin-bottom: 5px;
 }

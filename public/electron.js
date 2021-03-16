@@ -1,6 +1,8 @@
 const {app, BrowserWindow, Menu, dialog} = require('electron');
 const path = require('path');
 
+let currentFile = null;
+
 
 function createWindow () {   
     // Create the browser window.     
@@ -32,9 +34,13 @@ app.on('ready', ()=> {
                     "accelerator": "CmdOrCtrl+o",
                     click: ()=> {
                         dialog.showOpenDialog({
-                            title: "Sélectionner le fichier de quiz",
+                            title: "Sélectionner le fichier de recette",
                             properties: ['openFile'],
                             filters: [
+                                {
+                                    "name": "beer",
+                                    "extensions": ["beer"]
+                                },
                                 {
                                     "name": "json",
                                     "extensions": ["json"]
@@ -46,9 +52,40 @@ app.on('ready', ()=> {
                             ],
                         }).then(function (response) {
                             if (!response.canceled) {
-                                // handle fully qualified file name
-                              console.log(response.filePaths[0]);
+                              currentFile = response.filePaths[0];
                               mainWindow.webContents.send('open-file', response.filePaths[0]);
+                            } else {
+                              console.log("no file selected");
+                            }
+                        });
+                    }
+                },
+                {
+                    label: "Enregistrer",
+                    "accelerator": "CmdOrCtrl+s",
+                    click: () => {
+                        if (currentFile != null) {
+                            mainWindow.webContents.send('save-file', currentFile);
+                        }
+                    }
+                },
+                {
+                    label: "Enregistrer sous...",
+                    "accelerator": "CmdOrCtrl+Maj+s",
+                    click: () => {
+                        dialog.showSaveDialog({
+                            title: "Sélectionner le fichier de recette",
+                            properties: ['openFile'],
+                            filters: [
+                                {
+                                    "name": "beer",
+                                    "extensions": ["beer"]
+                                }
+                            ],
+                        }).then(function (response) {
+                            if (!response.canceled) {
+                              currentFile = response.filePath;
+                              mainWindow.webContents.send('save-file', response.filePath);
                             } else {
                               console.log("no file selected");
                             }
