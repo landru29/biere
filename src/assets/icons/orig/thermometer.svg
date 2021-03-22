@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 15.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   width="319"
+   height="589"
+   viewBox="0 0 319 588.99999"
+   enable-background="new 0 0 512 586.484"
+   xml:space="preserve"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="thermometer.svg"><metadata
+     id="metadata3039"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+     id="defs3037" /><sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1152"
+     inkscape:window-height="837"
+     id="namedview3035"
+     showgrid="false"
+     inkscape:zoom="0.63538863"
+     inkscape:cx="125.48394"
+     inkscape:cy="270.92686"
+     inkscape:window-x="1280"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_1" /><path
+     id="path3051"
+     d="m 87.973,310.42029 v 14.662 H 0 v -14.662 h 87.973 z m 0,-43.986 v 14.662 H 29.324 v -14.662 h 58.649 z m 0,-43.986 v 14.662 H 0 v -14.662 h 87.973 z m 0,-43.987 v 14.662 H 29.324 v -14.662 h 58.649 z m 0,-43.986 v 14.662 H 0 v -14.662 h 87.973 z m 0,-43.986 v 14.662 H 29.324 v -14.662 h 58.649 z m 0,-43.986999 v 14.662 H 0 v -14.662 H 87.973 z M 317.7252,457.04129 c 0,72.881 -59.078,131.959 -131.959,131.959 -72.881,0 -131.958997,-59.078 -131.958997,-131.959 0,-51.804 29.861,-96.649 73.310997,-118.241 V 61.164291 c 0,-32.388 26.26,-58.648005 58.648,-58.648005 32.388,0 58.648,26.260005 58.648,58.648005 V 338.80029 c 43.443,21.592 73.311,66.438 73.311,118.241 z m -51.317,0 c 0,44.531 -36.111,80.642 -80.642,80.642 -44.537,0 -80.642,-36.11 -80.642,-80.642 0,-39.533 28.443,-72.423 65.979,-79.31 v -184.608 h 29.324 v 184.608 c 37.544,6.888 65.981,39.777 65.981,79.31 z M 184.8125,15.531245 c -36.50903,0.673767 -45.71875,33.25 -45.71875,33.25 l 0,298.687505 c -42.504526,18.00778 -72.3125,60.11939 -72.3125,109.1875 0,65.45731 53.04268,118.53125 118.5,118.53125 65.45732,0 118.53125,-53.07394 118.53125,-118.53125 0,-48.64383 -29.30052,-90.45484 -71.21875,-108.71875 l 0,-299.156255 c 0,0 -11.27222,-33.923767 -47.78125,-33.25 z"
+     inkscape:connector-curvature="0" /></svg>

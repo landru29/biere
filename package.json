@@ -36,10 +36,9 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "svgo -f src/assets/icons/orig -o src/assets/icons && react-scripts start",
+    "build": "svgo -f src/assets/icons/orig -o src/assets/icons && react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "preelectron-start": "npm run build",
     "preelectron-pack": "npm run build",
     "preelectron-test": "npm run build",
@@ -67,7 +66,8 @@
   },
   "devDependencies": {
     "electron": "^11.2.3",
-    "electron-builder": "^22.9.1"
+    "electron-builder": "^22.9.1",
+    "svgo": "^2.2.2"
   },
   "build": {
     "appId": "nonExistentID",
@@ -84,7 +84,14 @@
     },
     "win": {
       "icon": "public/favicon.ico"
-    },
-    "throwIfNamespace": false
+    }
+  },
+  "babel": {
+    "presets": [
+      "react-app",
+      {
+        "throwIfNamespace": false
+      }
+    ]
   }
 }
