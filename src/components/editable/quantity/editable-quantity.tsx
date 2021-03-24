@@ -75,7 +75,7 @@ export default class EditableQuantity extends React.PureComponent<Props, State> 
         const units: Unit[] = Unit.getPhysicalUnits(value.unit.family);
         return <div className="editable-quantity">
             {!this.state.editing && <span>
-                <span>{value.value}</span>
+                <span>{value.value.toFixed(2)}</span>
                 <span>{value.unit.name}</span>
                 <button type="button" className="btn btn-sm btn-link" onClick={this.handleEdit}>
                     <FontAwesomeIcon icon={faPen} />

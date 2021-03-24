@@ -4,6 +4,8 @@ import Data from '../../service/data';
 import {v4 as uuidv4} from 'uuid';
 import './receipe.scss';
 import EditableText from '../editable/text/editable-text';
+import EditableQuantity from '../editable/quantity/editable-quantity';
+import { Quantity } from '../../model/quantity';
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import { Color } from '../../service/color';
 import { Step } from '../../model/step';
@@ -14,6 +16,8 @@ import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
 import { Accordion, Icon } from 'semantic-ui-react';
 import { ConfirmButton } from '../confirmbutton/confirm-button';
 import StepComponent from '../step/step';
+import { ReactComponent as WaterSvg } from '../../assets/icons/water.svg';
+import { Unit } from '../../service/unit';
 
 
 interface ReceipeProps {
@@ -24,6 +28,7 @@ interface ReceipeState {
     receipe: Receipe;
     activeSteps: boolean[];
     toDrag: number | undefined;
+    targetQty: Quantity;
 };
 
 export default class ReceipeComponent extends React.Component<ReceipeProps, ReceipeState> {
@@ -39,6 +44,7 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
             receipe: new Receipe('', new Date(), ''),
             activeSteps:[],
             toDrag: undefined,
+            targetQty: new Quantity(0, new Unit('volume', 'l'))
         }
 
         Data.dataReady().subscribe({
@@ -137,8 +143,8 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
     handleStepNameChange = (step: Step) => {
         return (name: string) => {
             const receipe = this.state.receipe;
-            receipe.steps = receipe.steps.map((stp: Step) => {
-                return stp.uuid === step.uuid ? { ...step, name } : stp;
+            receipe.steps = receipe.steps.map<Step>((stp: Step) => {
+                return stp.uuid === step.uuid ? Step.fromApi({ ...step, name }) : stp;
             });
             this.validate(
                 Receipe.fromApi(receipe),
@@ -149,8 +155,8 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
     handleStepTemperatureChange = (step: Step) => {
         return (temperature: number) => {
             const receipe = this.state.receipe;
-            receipe.steps = receipe.steps.map((stp: Step) => {
-                return stp.uuid === step.uuid ? { ...step, temperature } : stp;
+            receipe.steps = receipe.steps.map<Step>((stp: Step) => {
+                return stp.uuid === step.uuid ? Step.fromApi({ ...step, temperature }) : stp;
             });
             this.validate(
                 Receipe.fromApi(receipe),
@@ -161,8 +167,8 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
     handleStepLastingChange = (step: Step) => {
         return (lasting: number) => {
             const receipe = this.state.receipe;
-            receipe.steps = receipe.steps.map((stp: Step) => {
-                return stp.uuid === step.uuid ? { ...step, lasting } : stp;
+            receipe.steps = receipe.steps.map<Step>((stp: Step) => {
+                return stp.uuid === step.uuid ? Step.fromApi({ ...step, lasting }) : stp;
             });
             this.validate(
                 Receipe.fromApi(receipe),
@@ -182,6 +188,19 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
         return (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
             this.setState({ toDrag: index });
         };
+    }
+
+    handleVolTargetChange = (newQuantity: Quantity, oldQuantity: Quantity) => {
+        this.setState({targetQty: newQuantity});
+    }
+
+    handleScale = () => {
+        const currentReceipe = this.state.receipe;
+        currentReceipe.scaleToFinalVolume(this.state.targetQty);
+        this.setState({
+            targetQty: new Quantity(0, new Unit('volume', 'l')),
+            receipe: Receipe.fromApi(currentReceipe),
+        });
     }
 
     onDragStart = (index: number) => {
@@ -233,6 +252,7 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
         const needRincing: boolean = (receipe.advicedRincingVolume().value > 0);
         const toDrag = this.state.toDrag;
         const dragStepUuid = this.dragStep ? this.dragStep.uuid : '';
+        const targetQty = this.state.targetQty || new Quantity(0, new Unit('volume', 'l'));
         return <div className="receipe">
         <h2 className="text-center">
             <EditableText<string> value={receipe.name} onChange={this.handleTitleChange}/>
@@ -253,6 +273,13 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
                             <span className="water libelized">Volume final</span>
                             <span >{ receipe.finalVolume().convertTo('volume.l').toFixed(1) }</span>
                             <span className="unit">L</span>
+                            <span className="scale-receipe row">
+                                <span className="ingredient-water">
+                                    <WaterSvg className="ingredient-icon" height="16" />
+                                    <span className="col-md-2"><EditableQuantity value={targetQty} onChange={this.handleVolTargetChange} /></span>
+                                </span>
+                                <button type="button" onClick={this.handleScale} disabled={targetQty.value===0}>recalculer</button>
+                            </span>
                         </li>
                         <li className="important">
                             <span className="drink libelized">Alcool</span>

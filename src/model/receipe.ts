@@ -176,6 +176,18 @@ export class Receipe {
         return Color.estimate(this.totalWater().convertTo('volume.l'), this.grains());
     }
 
+    scale(factor: number) {
+        this.steps.forEach((stp: Step) => stp.scale(factor));
+    }
+
+    scaleToFinalVolume(qte: Quantity, retentionRate: number = 1, boilingLoss: number = 0.03) {
+        if (qte.unit.family === 'volume') {
+            const actualVol = this.finalVolume(retentionRate, boilingLoss).convertTo('volume.l');
+            const target = qte.convertTo('volume.l');
+            this.scale(target/actualVol);
+        }
+    }
+
     static fromApi(data: any): Receipe {
         const receipe = new Receipe(
             (data || {}).name || '',

@@ -48,4 +48,8 @@ export class Step {
         }
         return step;
     }
+
+    public scale(factor: number) {
+        this.ingredients.forEach((ing: Ingredient) => ing.scale(factor));
+    }
 }
