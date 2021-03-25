@@ -14,7 +14,6 @@ function createWindow () {
         }
     });
     
-    //win.loadURL('http://localhost:3000/');
     win.loadURL(`file://${path.join(__dirname, '../build/index.html')}`);
 
     //win.webContents.openDevTools();
@@ -27,8 +26,18 @@ app.on('ready', ()=> {
 
     let menu = Menu.buildFromTemplate([
         {
-            label: "File",
+            label: "Fichier",
             submenu: [
+                {
+                    label: "Nouveau",
+                    "accelerator": "CmdOrCtrl+n",
+                    click: () => {
+                        if (currentFile != null) {
+                            mainWindow.webContents.send('file-new', currentFile);
+                        }
+                    }
+                },
+                { type: 'separator' },
                 {
                     label: "Ouvrir",
                     "accelerator": "CmdOrCtrl+o",
@@ -53,7 +62,7 @@ app.on('ready', ()=> {
                         }).then(function (response) {
                             if (!response.canceled) {
                               currentFile = response.filePaths[0];
-                              mainWindow.webContents.send('open-file', response.filePaths[0]);
+                              mainWindow.webContents.send('file-open', response.filePaths[0]);
                             } else {
                               console.log("no file selected");
                             }
@@ -65,7 +74,7 @@ app.on('ready', ()=> {
                     "accelerator": "CmdOrCtrl+s",
                     click: () => {
                         if (currentFile != null) {
-                            mainWindow.webContents.send('save-file', currentFile);
+                            mainWindow.webContents.send('file-save', currentFile);
                         }
                     }
                 },
@@ -85,20 +94,48 @@ app.on('ready', ()=> {
                         }).then(function (response) {
                             if (!response.canceled) {
                               currentFile = response.filePath;
-                              mainWindow.webContents.send('save-file', response.filePath);
+                              mainWindow.webContents.send('file-save', response.filePath);
                             } else {
                               console.log("no file selected");
                             }
                         });
                     }
                 },
+                { type: 'separator' },
+                {
+                    label: "Imprimer",
+                    "accelerator": "CmdOrCtrl+p",
+                    click: () => {
+                        mainWindow.webContents.print();
+                    }
+                },
+                { type: 'separator' },
                 {
                     label: "Quitter",
                     "accelerator": "CmdOrCtrl+q",
                     click: () => app.quit()
                 }
             ]
-        }
+        },
+        {
+            label: "Edition",
+            submenu: [
+                {
+                    label: "Annuler",
+                    "accelerator": "CmdOrCtrl+z",
+                    click: () => {
+                         mainWindow.webContents.send('edit-cancel', currentFile);
+                    }
+                },
+                {
+                    label: "Refaire",
+                    "accelerator": "CmdOrCtrl+y",
+                    click: () => {
+                        mainWindow.webContents.send('edit-redo', currentFile);
+                    }
+                },
+            ]
+        },
     ]);
     Menu.setApplicationMenu(menu);
 })

@@ -38,7 +38,8 @@ export default class IngredientMiscComponent extends React.PureComponent<Props, 
         const ingredient = this.props.ingredient || new Grain('');
         return <span className="ingredient-misc">
             <MiscSvg className="ingredient-icon" height="16" />
-            <span className="col-md-4"><EditableText<string> value={ingredient.name} onChange={this.handleNameChange} /></span>
+            <span className="col-md-2"><EditableText<string> value={ingredient.name} onChange={this.handleNameChange} /></span>
+            <span className="col-md-2 screenable"></span>
             <span className="col-md-2"><EditableQuantity value={ingredient.qty} onChange={this.handleQuantityChange} /></span>
         </span>;
     }

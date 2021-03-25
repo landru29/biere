@@ -81,13 +81,14 @@ export default class EditableText<T> extends React.PureComponent<Props<T>, State
         }
         const tempValue: T = this.state.tempValue;
         return <div className="editable-text">
-            {!this.state.editing && <span>
+            <span className="printable">{value}</span>
+            {!this.state.editing && <span className="screenable">
                 <span>{value}</span>
                 <button type="button" className="btn btn-sm btn-link" onClick={this.handleEdit}>
                     <FontAwesomeIcon icon={faPen} />
                 </button>
             </span>}
-            {this.state.editing && <form onSubmit={this.handleValidate}>
+            {this.state.editing && <form onSubmit={this.handleValidate} className="screenable">
                 <input
                     type="text"
                     value={`${tempValue}`}

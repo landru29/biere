@@ -1,7 +1,9 @@
 .process-step {
     margin-left: 50px;
 
-    border-left: solid 2px #506aff;
+    @media screen {
+        border-left: solid 2px #506aff;
+    }
 
     .step-temperature {
         display: inline-block;

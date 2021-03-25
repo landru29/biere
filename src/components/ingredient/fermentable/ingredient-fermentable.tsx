@@ -55,7 +55,7 @@ export default class IngredientFermentableComponent extends React.PureComponent<
         return <span className="ingredient-fermentable">
             <FermentableSvg className="ingredient-icon" height="16" />
             <span className="col-md-2"><EditableText<string> value={ingredient.name} onChange={this.handleNameChange} /></span>
-            <span className="col-md-2"><EditableText<number> value={ingredient.ebc} onChange={this.handleEbcChange} template={this.displayEbc}/></span>
+            <span className="col-md-2 screenable"><EditableText<number> value={ingredient.ebc} onChange={this.handleEbcChange} template={this.displayEbc}/></span>
             <span className="col-md-2"><EditableQuantity value={ingredient.qty} onChange={this.handleQuantityChange} /></span>
         </span>;
     }

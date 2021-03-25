@@ -13,7 +13,7 @@
                     "name": "Pilsner",
                     "unitFamilly": "mass",
                     "qty": {
-                        "value": 6,
+                        "value": 20,
                         "unit": {
                             "family": "mass",
                             "name": "kg"
@@ -27,26 +27,12 @@
                     "name": "Eau",
                     "unitFamilly": "volume",
                     "qty": {
-                        "value": 20,
+                        "value": 80,
                         "unit": {
                             "family": "volume",
                             "name": "l"
                         }
                     }
-                },
-                {
-                    "type": "fermentable",
-                    "name": "Chocolat (Malt)",
-                    "unitFamilly": "mass",
-                    "qty": {
-                        "value": 200,
-                        "unit": {
-                            "family": "mass",
-                            "name": "g"
-                        }
-                    },
-                    "ebc": 500,
-                    "yield": 71
                 }
             ],
             "uuid": "52c7f3b7-dd19-4842-a7e2-0c6d3a695329"
@@ -82,7 +68,7 @@
                     "name": "Tap water",
                     "unitFamilly": "volume",
                     "qty": {
-                        "value": 20,
+                        "value": 50,
                         "unit": {
                             "family": "volume",
                             "name": "l"
@@ -102,7 +88,7 @@
                     "name": "Pearle",
                     "unitFamilly": "mass",
                     "qty": {
-                        "value": 40,
+                        "value": 120,
                         "unit": {
                             "family": "mass",
                             "name": "g"

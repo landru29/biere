@@ -37,7 +37,8 @@ export default class IngredientYeastComponent extends React.PureComponent<Props,
         const ingredient = this.props.ingredient || new Grain('');
         return <span className="ingredient-yeast">
             <YeastSvg className="ingredient-icon" height="16" />
-            <span className="col-md-4">{ingredient.name}</span>
+            <span className="col-md-2">{ingredient.name}</span>
+            <span className="col-md-2 screenable"></span>
             <span className="col-md-2"><EditableQuantity value={ingredient.qty} onChange={this.handleQuantityChange} /></span>
         </span>;
     }

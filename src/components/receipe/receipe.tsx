@@ -245,6 +245,11 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
     }
     
     render() : any {
+        const leading = (x: number, size=2) => {
+            let num = x.toString();
+            while (num.length < size) num = "0" + num;
+            return num;
+        };
         const receipe: Receipe = this.state.receipe || new Receipe('', new Date(), '');
         const activeSteps: boolean[] = this.state.activeSteps || [];
         const beerColor: Color = receipe.color();
@@ -257,10 +262,11 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
         <h2 className="text-center">
             <EditableText<string> value={receipe.name} onChange={this.handleTitleChange}/>
         </h2>
+        <div className="printable text-center">- {receipe.date.toLocaleDateString()} -</div>
         <header>
-                <div>
-                    <div className="bottom-space-m16">
-                        <label className="right-space-m16">Date</label>
+                <div className="head-block">
+                    <div className="bottom-space-m16 screenable">
+                        <label className="right-space-m16 screenable">Date</label>
                         <SemanticDatepicker
                             onChange={this.onDateChange}
                             pointing="left"
@@ -286,12 +292,12 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
                             <span >{ receipe.diluatedSugar().alcohol.toFixed(1)}</span>
                             <span className="unit">%Vol</span>
                         </li>
-                        <li>
+                        <li className="screenable">
                             <span className="water libelized">Volume d'empâtage</span>
                             <span >{ receipe.advicedMashingVolume().convertTo('volume.l').toFixed(1) }</span>
                             <span className="unit">L</span>
                         </li>
-                        <li className={!needRincing ? 'alert-danger' : ''}>
+                        <li className={!needRincing ? 'alert-danger screenable' : 'screenable'}>
                             <span className="water libelized">Volume de rinçage</span>
                             <span >{ receipe.advicedRincingVolume().convertTo('volume.l').toFixed(1) }</span>
                             <span className="unit">L</span>
@@ -316,7 +322,7 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
                 </div>
             </header>
 
-            <Accordion>
+            <Accordion className="screenable">
                 {receipe.steps.map((step: Step, index: number) => {
                     return <div
                             key={step.uuid}
@@ -359,6 +365,29 @@ export default class ReceipeComponent extends React.Component<ReceipeProps, Rece
                     </div>;
                 })}
             </Accordion>
+
+            <div className="printable">
+            {receipe.steps.map((step: Step, index: number) => {
+                return <div
+                key={step.uuid}
+                className='process-item'
+                >
+                    <div className="step-title">
+                        <span className="step-name">{step.name}</span>
+                        <div className="process-temperature">{step.temperature} °c</div>
+                        <div className="process-duration">
+                            <FontAwesomeIcon icon={faClock} />
+                            <span className="left-space-m4">{
+                                step.lasting>24*60 ?
+                                `${Math.round(step.lasting/(24*60))} jour(s)`: 
+                                `${leading(Math.floor(step.lasting / 60))}:${leading(step.lasting % 60)}`
+                            }</span>
+                        </div>
+                    </div>
+                    <StepComponent step={step} onChange={this.handleStepChange(step)}/>
+                </div>
+            })}
+            </div>
             
             <button type="button" className="btn btn-link step-delete" onClick={this.handleStepAdd}><FontAwesomeIcon icon={faPlus} /></button>
         </div>;

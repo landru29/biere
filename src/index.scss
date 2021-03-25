@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.printable {
+  @media screen {
+    display: none !important;
+  }
+}
+
+.screenable,.clndr-calendars-segment {
+  @media print {
+    display: none !important;
+  }
+}

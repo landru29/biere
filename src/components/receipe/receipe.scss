@@ -1,19 +1,41 @@
 .receipe {
 
-    .accordion {
-        //margin-left: 35px;
+    counter-reset: section;
 
-        div.process-item {
-            padding-left: 35px;
+    .scale-receipe{
+        @media print {
+            display: none;
         }
+    }
 
-        .dragging {
+    .accordion {
+          .dragging {
             background-color: #eeeeee;
+        }
+    }
+
+    div.process-item {
+        padding-left: 35px;
+        @media print {
+            margin-bottom: 32px;
+        }
+    }
+
+    .important {
+        font-size: 1.3em;
+        margin-bottom: 5px;
+        @media print {
+            font-size: 1em;
+            margin-bottom: 0;
         }
     }
 
     h2 {
         text-align: left;
+
+        @media print {
+            text-align: center;
+        }
     }
 
     .libelized {
@@ -29,6 +51,22 @@
 
     ul.features{
         list-style-type: none;
+        padding-left: 0;
+        @media print {
+            display: inline-block;
+            text-align: left;
+        }
+    }
+
+    .head-block {
+        @media print {
+            padding-left: 64px;
+            border-bottom: solid 1px #888;
+            margin-top: 32px;
+            margin-bottom: 32px;
+            padding-top: 32px;
+            border-top: solid 1px #888;
+        }
     }
 
     .accordion-block {
@@ -39,6 +77,10 @@
     .handle {
         display: inline-block;
         width: 2%;
+
+        @media print {
+            display: none;
+        }
     }
 
     .step-title {
@@ -46,9 +88,21 @@
 
         .step-name {
             display: inline-block;
+
+            @media print {
+                font-size: 1.5em;
+                font-weight: bold;
+
+                &::before {
+                    counter-increment: section;
+                    content: counter(section) " - ";
+                }
+            }
         }
 
+
         .process-temperature {
+            min-width: 60px;
             display: inline-block;
             position: absolute;
             left: 240px;
@@ -94,6 +148,7 @@
     display: inline-block;
     border-radius: 10px;
     padding: 0 10px 0 10px;
+    line-height: 1.8em;
 }
 
 label {
@@ -107,7 +162,8 @@ label {
     margin-bottom: 5px;
 }
 
-.important {
-    font-size: 1.3em;
-    margin-bottom: 5px;
+.step-delete {
+    @media print {
+        display: none;
+    }
 }

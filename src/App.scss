@@ -1,6 +1,10 @@
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import '~bootstrap-sass';
 
+@import './styles/constants.scss';
+@import './styles/main.scss';
+@import './styles/svg-font.scss';
+
 .App {
   text-align: left;
 }
@@ -24,3 +28,4 @@ h1 {
   background-color: transparent;
   color: #285fff;
 }
+

@@ -74,14 +74,18 @@ export default class EditableQuantity extends React.PureComponent<Props, State> 
         const tempValue: Quantity = this.state.tempValue || new Quantity(0, new Unit());
         const units: Unit[] = Unit.getPhysicalUnits(value.unit.family);
         return <div className="editable-quantity">
-            {!this.state.editing && <span>
+            <span className="printable">
+                <span>{value.value.toFixed(2).replace(/\.00/, '')}</span>
+                <span className="left-space-m8">{value.unit.name}</span>
+            </span>
+            {!this.state.editing && <span className="screenable">
                 <span>{value.value.toFixed(2)}</span>
                 <span>{value.unit.name}</span>
                 <button type="button" className="btn btn-sm btn-link" onClick={this.handleEdit}>
                     <FontAwesomeIcon icon={faPen} />
                 </button>
             </span>}
-            {this.state.editing && <form onSubmit={this.handleValidate}>
+            {this.state.editing && <form onSubmit={this.handleValidate} className="screenable">
                 <input
                     type="text"
                     value={`${tempValue.value}`}

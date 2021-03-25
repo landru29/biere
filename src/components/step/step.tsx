@@ -26,6 +26,7 @@ interface Selection {
 interface Props {
     step: Step;
     onChange: (step: Step) => void;
+    className?: string;
 }
 
 interface State {
@@ -302,10 +303,10 @@ export default class StepComponent extends React.PureComponent<Props, State> {
             {step.ingredients.map((ingredient: Ingredient, index: number) => {
                 return <li key={index} className="relative row">
                     <IngredientComponent ingredient={ingredient} onChange={this.handleIngredientChange(ingredient)}/>
-                    <button type="button" className="btn btn-link ingredient-delete" onClick={this.handleRemove(ingredient)}><FontAwesomeIcon icon={faTrash} /></button>
+                    <button type="button" className="btn btn-link ingredient-delete screenable" onClick={this.handleRemove(ingredient)}><FontAwesomeIcon icon={faTrash} /></button>
                 </li>;
             })}
-            <li className="row">
+            <li className="row screenable">
                 <span className="col-md-2">
                     <Dropdown
                         placeholder='Type'
